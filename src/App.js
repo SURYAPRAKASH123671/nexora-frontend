@@ -5,6 +5,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 
 import { CartProvider } from "./context/CartContext";
 
@@ -33,6 +34,7 @@ function App() {
         </Routes>
 
         <Cart />
+        <Analytics />
       </BrowserRouter>
     </CartProvider>
   );
