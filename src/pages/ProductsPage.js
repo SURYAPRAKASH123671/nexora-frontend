@@ -12,7 +12,6 @@ export default function ProductsPage() {
   const [search, setSearch] = useState("");
   const { setCartOpen } = useCart();
 
-  // Track screen width for responsive layout
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -45,69 +44,109 @@ export default function ProductsPage() {
 
   return (
     <div style={{ background: "#0A0A0A", minHeight: "100vh", color: "white" }}>
+      {/* HEADER */}
       <div
         style={{
           width: "100%",
           backgroundColor: "#0b1120",
-          padding: isMobile ? "15px 20px" : "20px 60px",
+          padding: isMobile ? "12px 16px" : "20px 60px",
           display: "flex",
-          flexDirection: isMobile ? "column" : "row",
-          justifyContent: "space-between",
-          alignItems: isMobile ? "flex-start" : "center",
+          flexDirection: "column",
           borderBottom: "1px solid #1e293b",
           position: isMobile ? "relative" : "fixed",
           top: 0,
           zIndex: 100,
           boxSizing: "border-box",
-          gap: isMobile ? "12px" : "0",
+          gap: isMobile ? "10px" : "0",
         }}
       >
-        <h1 style={{ color: "#4f83ff", fontSize: isMobile ? "26px" : "35px", margin: 0 }}>
-          Nexora 🚀
-        </h1>
-
+        {/* Top row: logo + nav/icons */}
         <div
           style={{
             display: "flex",
-            gap: isMobile ? "15px" : "30px",
+            justifyContent: "space-between",
             alignItems: "center",
-            flexWrap: "wrap",
-            order: isMobile ? 3 : 2,
+            width: "100%",
           }}
         >
-          <Link to="/" style={navLinkStyle}>Home</Link>
-          <Link to="/products" style={navLinkStyle}>Products</Link>
-          <Link to="/orders" style={navLinkStyle}>Orders</Link>
+          <h1 style={{ color: "#4f83ff", fontSize: isMobile ? "24px" : "35px", margin: 0 }}>
+            Nexora 🚀
+          </h1>
 
-          <button
-            onClick={() => setCartOpen(true)}
-            style={{
-              background: "none",
-              border: "none",
-              color: "white",
-              fontSize: "18px",
-              cursor: "pointer",
-              fontFamily: "inherit",
-              padding: 0,
-            }}
-          >
-            Cart 🛒
-          </button>
-
-          <Link
-            to="/login"
-            style={{
-              backgroundColor: "#2563eb",
-              color: "white",
-              padding: "12px 22px",
-              borderRadius: "12px",
-              textDecoration: "none",
-            }}
-          >
-            Login
-          </Link>
+          {isMobile ? (
+            <div style={{ display: "flex", gap: "18px", alignItems: "center" }}>
+              <button
+                onClick={() => setCartOpen(true)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "white",
+                  fontSize: "22px",
+                  cursor: "pointer",
+                  padding: 0,
+                }}
+              >
+                🛒
+              </button>
+              <Link
+                to="/login"
+                style={{
+                  backgroundColor: "#2563eb",
+                  color: "white",
+                  padding: "8px 14px",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  fontSize: "14px",
+                }}
+              >
+                Login
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+              <Link to="/" style={navLinkStyle}>Home</Link>
+              <Link to="/products" style={navLinkStyle}>Products</Link>
+              <Link to="/orders" style={navLinkStyle}>Orders</Link>
+              <button
+                onClick={() => setCartOpen(true)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "white",
+                  fontSize: "18px",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  padding: 0,
+                }}
+              >
+                Cart 🛒
+              </button>
+              <Link
+                to="/login"
+                style={{
+                  backgroundColor: "#2563eb",
+                  color: "white",
+                  padding: "12px 22px",
+                  borderRadius: "12px",
+                  textDecoration: "none",
+                }}
+              >
+                Login
+              </Link>
+            </div>
+          )}
         </div>
 
+        {/* Mobile nav links row */}
+        {isMobile && (
+          <div style={{ display: "flex", gap: "20px" }}>
+            <Link to="/" style={{ ...navLinkStyle, fontSize: "14px" }}>Home</Link>
+            <Link to="/products" style={{ ...navLinkStyle, fontSize: "14px" }}>Products</Link>
+            <Link to="/orders" style={{ ...navLinkStyle, fontSize: "14px" }}>Orders</Link>
+          </div>
+        )}
+
+        {/* Search bar */}
         <input
           type="text"
           placeholder="Search products..."
@@ -117,48 +156,53 @@ export default function ProductsPage() {
             background: "#1a1a2e",
             border: "1px solid #333",
             borderRadius: "8px",
-            padding: "8px 16px",
+            padding: "10px 16px",
             color: "white",
             fontSize: "14px",
             width: isMobile ? "100%" : "220px",
             outline: "none",
-            order: isMobile ? 2 : 3,
             boxSizing: "border-box",
+            position: isMobile ? "static" : "absolute",
+            right: isMobile ? "auto" : "60px",
+            top: isMobile ? "auto" : "26px",
           }}
         />
       </div>
 
+      {/* MAIN CONTENT */}
       <div
         style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          paddingTop: isMobile ? "20px" : "100px",
+          paddingTop: isMobile ? "16px" : "100px",
           maxWidth: "1500px",
           margin: "auto",
-          gap: isMobile ? "15px" : "30px",
-          paddingInline: "20px",
+          gap: isMobile ? "16px" : "30px",
+          paddingInline: isMobile ? "16px" : "20px",
         }}
       >
         <Sidebar activeFilter={filter} onFilter={setFilter} />
 
         <div style={{ flex: 1 }}>
-          <h2
-            style={{
-              color: "#C9A84C",
-              fontSize: isMobile ? "22px" : "28px",
-              margin: "0 0 25px",
-            }}
-          >
-            All Products
-          </h2>
+          {!isMobile && (
+            <h2
+              style={{
+                color: "#C9A84C",
+                fontSize: "28px",
+                margin: "0 0 25px",
+              }}
+            >
+              All Products
+            </h2>
+          )}
 
           <div
             style={{
               display: "grid",
               gridTemplateColumns: isMobile
-                ? "repeat(auto-fit, minmax(160px, 1fr))"
+                ? "repeat(2, 1fr)"
                 : "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: isMobile ? "15px" : "25px",
+              gap: isMobile ? "12px" : "25px",
             }}
           >
             {filteredProducts.map((product) => (
