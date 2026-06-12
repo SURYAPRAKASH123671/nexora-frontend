@@ -1,107 +1,51 @@
-import React from "react";
+<div
+  style={{
+    width: "100%",
+    backgroundColor: "#0b1120",
+    padding: "15px 20px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottom: "1px solid #1e293b",
+    flexWrap: "wrap",
+    boxSizing: "border-box"
+  }}
+>
+  <h1
+    style={{
+      color: "#4f83ff",
+      fontSize: "30px",
+      margin: 0
+    }}
+  >
+    Nexora 🚀
+  </h1>
 
-import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+  <div
+    style={{
+      display: "flex",
+      gap: "15px",
+      alignItems: "center",
+      flexWrap: "wrap"
+    }}
+  >
+    <Link to="/" style={linkStyle}>
+      Home
+    </Link>
 
-const Navbar = () => {
+    <Link to="/products" style={linkStyle}>
+      Products
+    </Link>
 
-    const { setCartOpen } = useCart();
+    <button
+      onClick={() => setCartOpen(true)}
+      style={cartButtonStyle}
+    >
+      Cart 🛒
+    </button>
 
-    return (
-
-        <div
-            style={{
-                width: "100%",
-                backgroundColor: "#0b1120",
-                padding: "20px 60px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderBottom: "1px solid #1e293b"
-            }}
-        >
-
-            <h1
-                style={{
-                    color: "#4f83ff",
-                    fontSize: "35px"
-                }}
-            >
-                Nexora 🚀
-            </h1>
-
-            <div
-                style={{
-                    display: "flex",
-                    gap: "30px",
-                    alignItems: "center"
-                }}
-            >
-
-                <Link
-                    to="/"
-                    style={linkStyle}
-                >
-                    Home
-                </Link>
-
-                <Link
-                    to="/products"
-                    style={linkStyle}
-                >
-                    Products
-                </Link>
-
-                <button
-                    onClick={() => setCartOpen(true)}
-                    style={cartButtonStyle}
-                >
-                    Cart 🛒
-                </button>
-
-                <Link
-                    to="/login"
-                    style={buttonStyle}
-                >
-                    Login
-                </Link>
-
-            </div>
-
-        </div>
-
-    );
-
-};
-
-const linkStyle = {
-
-    color: "white",
-    textDecoration: "none",
-    fontSize: "18px"
-
-};
-
-const cartButtonStyle = {
-
-    background: "none",
-    border: "none",
-    color: "white",
-    fontSize: "18px",
-    cursor: "pointer",
-    fontFamily: "inherit",
-    padding: 0
-
-};
-
-const buttonStyle = {
-
-    backgroundColor: "#2563eb",
-    color: "white",
-    padding: "12px 22px",
-    borderRadius: "12px",
-    textDecoration: "none"
-
-};
-
-export default Navbar;
+    <Link to="/login" style={buttonStyle}>
+      Login
+    </Link>
+  </div>
+</div>

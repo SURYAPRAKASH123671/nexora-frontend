@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import ProductCard from "../components/ProductCard";
@@ -11,6 +11,15 @@ export default function ProductsPage() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const { setCartOpen } = useCart();
+
+  // Track screen width for responsive layout
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const filteredProducts = PRODUCTS.filter((product) => {
     const productBadge = product.badge?.toLowerCase();
@@ -40,22 +49,32 @@ export default function ProductsPage() {
         style={{
           width: "100%",
           backgroundColor: "#0b1120",
-          padding: "20px 60px",
+          padding: isMobile ? "15px 20px" : "20px 60px",
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: isMobile ? "flex-start" : "center",
           borderBottom: "1px solid #1e293b",
-          position: "fixed",
+          position: isMobile ? "relative" : "fixed",
           top: 0,
           zIndex: 100,
           boxSizing: "border-box",
+          gap: isMobile ? "12px" : "0",
         }}
       >
-        <h1 style={{ color: "#4f83ff", fontSize: "35px", margin: 0 }}>
+        <h1 style={{ color: "#4f83ff", fontSize: isMobile ? "26px" : "35px", margin: 0 }}>
           Nexora 🚀
         </h1>
 
-        <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: isMobile ? "15px" : "30px",
+            alignItems: "center",
+            flexWrap: "wrap",
+            order: isMobile ? 3 : 2,
+          }}
+        >
           <Link to="/" style={navLinkStyle}>Home</Link>
           <Link to="/products" style={navLinkStyle}>Products</Link>
           <Link to="/orders" style={navLinkStyle}>Orders</Link>
@@ -101,8 +120,10 @@ export default function ProductsPage() {
             padding: "8px 16px",
             color: "white",
             fontSize: "14px",
-            width: "220px",
+            width: isMobile ? "100%" : "220px",
             outline: "none",
+            order: isMobile ? 2 : 3,
+            boxSizing: "border-box",
           }}
         />
       </div>
@@ -110,10 +131,11 @@ export default function ProductsPage() {
       <div
         style={{
           display: "flex",
-          paddingTop: "100px",
+          flexDirection: isMobile ? "column" : "row",
+          paddingTop: isMobile ? "20px" : "100px",
           maxWidth: "1500px",
           margin: "auto",
-          gap: "30px",
+          gap: isMobile ? "15px" : "30px",
           paddingInline: "20px",
         }}
       >
@@ -123,7 +145,7 @@ export default function ProductsPage() {
           <h2
             style={{
               color: "#C9A84C",
-              fontSize: "28px",
+              fontSize: isMobile ? "22px" : "28px",
               margin: "0 0 25px",
             }}
           >
@@ -133,8 +155,10 @@ export default function ProductsPage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "25px",
+              gridTemplateColumns: isMobile
+                ? "repeat(auto-fit, minmax(160px, 1fr))"
+                : "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: isMobile ? "15px" : "25px",
             }}
           >
             {filteredProducts.map((product) => (
